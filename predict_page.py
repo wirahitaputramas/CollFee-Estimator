@@ -94,4 +94,16 @@ def show_predict_page():
         X = X.astype(float)
 
         collFee = regressor.predict(X)
-        st.subheader(f"The estimated collection fee is IDR {collFee} (with MAX error about IDR 25000000)")
+        collFee = int(collFee)
+
+        collFeeIntLower = collFee - 2500000
+        collFeeIntUpper = collFee + 2500000
+
+        if (collFee <= 2500000) and (collFee >= 1000000):
+            collFeeIntLower = 500000
+
+        if (collFee < 1000000):
+            collFeeIntLower = 50000
+            collFeeIntUpper = 1000000
+        
+        st.subheader(f"The estimated range of collection fee is IDR {collFeeIntLower} - IDR {collFeeIntUpper}")
